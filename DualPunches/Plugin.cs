@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace DualPunches
 {
-    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
+    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, "1.0.1")]
     public class Plugin : BaseUnityPlugin
     {
         public static ResourceLocationMap resourceMap = null;

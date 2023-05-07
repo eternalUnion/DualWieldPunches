@@ -170,18 +170,37 @@ namespace DualPunches
         static FieldInfo hookarmEnemyGroundCheck = typeof(HookArm).GetField("enemyGroundCheck", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         public void EndPowerUp()
         {
-            if(currentHookarm != null)
+            if(currentHookarmComp != null)
             {
+                //currentHookarmComp.Cancel();
+
                 EnemyIdentifier eid = (EnemyIdentifier)hookarmCurrentEid.GetValue(currentHookarmComp);
                 if(eid != null)
                 {
                     eid.hooked = false;
                     GroundCheckEnemy gce = (GroundCheckEnemy)hookarmEnemyGroundCheck.GetValue(currentHookarmComp);
+                    if (gce == null)
+                        gce = eid.gce;
+
+                    GroundCheckEnemy originalHookEid = (GroundCheckEnemy)hookarmEnemyGroundCheck.GetValue(HookArm.Instance);
+
                     if (gce != null)
-                        gce.StopForceOff();
-                    if (eid.gce != null)
-                        eid.gce.ForceOff();
+                    {
+                        gce.forcedOff = 1;
+                        if (originalHookEid == null || gce.GetInstanceID() != originalHookEid.GetInstanceID())
+                            gce.StopForceOff();
+                        else
+                            Debug.Log("EID attached to original hook arm");
+                    }
+                    else
+                    {
+                        Debug.Log("Could not find ground check enemy");
+                    }
                 }
+            }
+            else
+            {
+                Debug.Log("Could not find the hookarm");
             }
 
             Destroy(base.gameObject);
