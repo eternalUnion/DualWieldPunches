@@ -164,6 +164,8 @@ namespace DualPunches
                     }
                 }
             }
+
+            transform.localRotation = Quaternion.identity;
         }
 
         static FieldInfo hookarmCurrentEid = typeof(HookArm).GetField("caughtEid", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
